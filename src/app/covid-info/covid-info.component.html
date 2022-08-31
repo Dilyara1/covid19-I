@@ -1,9 +1,10 @@
 <div class="page-container">
   <div class="page-content">
     <div class="content-box">
-      <p>Coronavirus</p>
-      <p *ngIf="latestCovidData">{{latestCovidData?.latestDate | date}} - {{latestCovidData?.latestNumber | number}}</p>
-      <p>{{vaccinePercent}}</p>
+      <h4>COVID19 Information</h4>
+      <p>Country: </p>
+      <p *ngIf="latestCovidData">On {{latestCovidData?.latestDate | date}}  <span style="color:red"> {{latestCovidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
+      <p>Vaccinated level of total population: {{vaccinePercent}}</p>
       <app-line-chart [chartData]="chartDataConfirmed"></app-line-chart>
       <app-line-chart [chartData]="chartData"></app-line-chart>
     </div>

@@ -36,8 +36,8 @@ export class CovidInfoComponent implements OnInit {
           backgroundColor: 'rgba(255,0,0,0.28)',
         },
           {
-            borderColor: 'blue',
-            backgroundColor: 'rgba(0,0,255,0.28)',
+            borderColor: 'green',
+            backgroundColor: 'rgba(0,255,0,0.28)',
           },]
       }
       this.chartDataConfirmed = {
