@@ -1,15 +1,7 @@
-<div class="content">
-  <h2 class="title">COVID19-I</h2>
-  <h4></h4>
-  <h5 *ngIf="latestCovidData" class="latest-data">{{latestCovidData?.latestDate | date}} - {{latestCovidData?.latestNumber}}</h5>
-  <div class="tooltip-info">
-    <ng-container *ngIf="selectedCase;else selectCountry">
-      <p>{{selectedCase?.All?.confirmed}}</p>
-      <p>{{selectedCase?.All?.recovered}}</p>
-      <p>{{selectedCase?.All?.deaths}}</p>
-    </ng-container>
-    <ng-template #selectCountry>
-      <p>Please select your country</p>
-    </ng-template>
+<div class="page-container">
+  <div class="page-content">
+    <div class="content-box">
+      <p>Coronavirus</p>
+    </div>
   </div>
 </div>

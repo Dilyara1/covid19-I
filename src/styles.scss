@@ -1,6 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
-body {
-  box-sizing: border-box;
-  margin: 0;
+@import "assets/scss/buttons";
+@import "assets/scss/dropdown";
+html, body {
+  height: 100%;
+  width: 100%;
   padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.page-container {
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 106px;
+  position: relative;
+  display: block;
+}
+
+.page-content {
+  display: block;
+  padding-right: 250px;
+  padding-left: 250px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.content-box {
+  display: block;
+  padding: 20px;
+  box-shadow: 0 0.5rem 3rem rgb(0 0 0 / 10%);
+  border-radius: 1rem;
+  background: #fff;
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  height: 70px;
+  background: #1abc9c;
+  color: white;
+
+  & .title {
+    font-size: 1.5rem;
+    color: red;
+  }
+
+  & .username {
+    font-size: 1rem;
+  }
+}
+
+.footer {
+  height: 20px;
+  text-align: center;
+}
+
+.content {
+  flex: 1 0 auto;
 }

@@ -6,20 +6,26 @@ import { AppComponent } from './app.component';
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
-import { SignInComponent } from './user/sign-in/sign-in.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { CovidInfoComponent } from './covid-info/covid-info.component';
 import { HttpClientModule } from "@angular/common/http";
+import { HeaderComponent } from './header/header.component';
+import { DropdownComponent } from './shared/dropdown/dropdown.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
-    CovidInfoComponent
+    CovidInfoComponent,
+    HeaderComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule
   ],
