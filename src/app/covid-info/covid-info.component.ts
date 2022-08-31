@@ -10,16 +10,51 @@ import { CovidStatus } from "../models/enums/enums";
   styleUrls: ['./covid-info.component.scss']
 })
 export class CovidInfoComponent implements OnInit {
-  covidCases = {};
+  covidCases: any[] = [];
   selectedCase: any;
   latestCovidData: any;
+  regionLabels: any[] = [];
+  chartData: any;
+  chartDataConfirmed: any;
+  vaccinePercent: any;
+
   constructor(private covidInfoService: CovidInfoService) { }
 
   ngOnInit(): void {
-    this.fetchCovidCases().subscribe((covidCases) => {
-      this.covidCases = covidCases;
+    this.fetchCovidCases('France').subscribe((covidCases) => {
+      for (let [key, value] of Object.entries(covidCases)) {
+        if (key !== 'All') {
+          this.regionLabels.push(key);
+          this.covidCases.push(value);
+        }
+      }
+      this.chartData = {
+        data: this.getChartDataList(),
+        regionLabels: this.regionLabels
+      }
+      this.chartDataConfirmed = {
+        data: [this.getChartData(CovidStatus.CONFIRMED)],
+        regionLabels: this.regionLabels
+      }
     });
     this.fetchCovidHistory(CovidStatus.CONFIRMED, 'France').subscribe();
+    this.fetchCovidVaccines('France').subscribe();
+  }
+
+  getChartDataList() {
+    const keys = [CovidStatus.DEATH, CovidStatus.RECOVERED];
+    const data = [];
+    for (let key of keys) {
+      data.push(this.getChartData(key));
+    }
+    return data;
+  }
+
+  getChartData(key: CovidStatus) {
+    const arr = this.covidCases.map((covidCase) => {
+      return covidCase[key];
+    });
+    return { data: arr, label: key };
   }
 
   fetchCovidCases(country?: string, ab?: string, continent?: string): Observable<any> {
@@ -36,6 +71,14 @@ export class CovidInfoComponent implements OnInit {
         const data = Object.entries(dates)[0];
         this.latestCovidData = {latestDate: data[0], latestNumber: data[1]};
       }
+    }));
+  }
+
+  fetchCovidVaccines(country?: string, ab?: string, continent?: string): Observable<any> {
+    return this.covidInfoService.getCovidVaccines(country, ab, continent).pipe(map((vaccine) => {
+      vaccine = vaccine?.All;
+      this.vaccinePercent = (vaccine?.people_vaccinated / vaccine.population) * 100;
+      this.vaccinePercent = this.vaccinePercent.toFixed(2) + '%';
     }));
   }
 }

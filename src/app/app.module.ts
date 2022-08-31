@@ -12,6 +12,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from './header/header.component';
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
 import { FormsModule } from "@angular/forms";
+import { LineChartComponent } from './shared/line-chart/line-chart.component';
+import { ChartsModule } from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -19,13 +21,15 @@ import { FormsModule } from "@angular/forms";
     SignInComponent,
     CovidInfoComponent,
     HeaderComponent,
-    DropdownComponent
+    DropdownComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     FormsModule,
+    ChartsModule,
     HttpClientModule,
     AppRoutingModule
   ],
