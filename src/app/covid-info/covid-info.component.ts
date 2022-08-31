@@ -30,11 +30,23 @@ export class CovidInfoComponent implements OnInit {
       }
       this.chartData = {
         data: this.getChartDataList(),
-        regionLabels: this.regionLabels
+        regionLabels: this.regionLabels,
+        colors: [{
+          borderColor: 'black',
+          backgroundColor: 'rgba(255,0,0,0.28)',
+        },
+          {
+            borderColor: 'blue',
+            backgroundColor: 'rgba(0,0,255,0.28)',
+          },]
       }
       this.chartDataConfirmed = {
         data: [this.getChartData(CovidStatus.CONFIRMED)],
-        regionLabels: this.regionLabels
+        regionLabels: this.regionLabels,
+        colors: [{
+          borderColor: 'black',
+          backgroundColor: 'rgba(255,255,0,0.28)',
+        }]
       }
     });
     this.fetchCovidHistory(CovidStatus.CONFIRMED, 'France').subscribe();
@@ -54,7 +66,7 @@ export class CovidInfoComponent implements OnInit {
     const arr = this.covidCases.map((covidCase) => {
       return covidCase[key];
     });
-    return { data: arr, label: key };
+    return { data: arr, label: key?.toUpperCase() };
   }
 
   fetchCovidCases(country?: string, ab?: string, continent?: string): Observable<any> {

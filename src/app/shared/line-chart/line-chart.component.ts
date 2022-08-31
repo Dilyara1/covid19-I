@@ -15,12 +15,7 @@ export class LineChartComponent implements OnInit, OnChanges {
   lineChartOptions = {
     responsive: true,
   };
-  lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,255,0,0.28)',
-    },
-  ];
+  lineChartColors: Color[] = [];
   lineChartLegend = true;
   lineChartPlugins = [];
   lineChartType: ChartType ='line';
@@ -43,7 +38,9 @@ export class LineChartComponent implements OnInit, OnChanges {
     if (chartData) {
       this.chartData = chartData;
       this.lineChartData = this.chartData.data;
+      console.log(this.lineChartData);
       this.lineChartLabels = this.chartData.regionLabels;
+      this.lineChartColors = this.chartData.colors;
     }
   }
 }
