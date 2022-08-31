@@ -51,7 +51,7 @@ export class AuthService {
       .signInWithPopup(provider)
       .then((result) => {
         this.setUserData(result.user).then(() => {
-          // this.router.navigate(['dashboard']);
+          this.router.navigate(['covid-info']);
         });
       })
       .catch(error => {

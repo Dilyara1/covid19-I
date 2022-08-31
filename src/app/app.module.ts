@@ -7,16 +7,20 @@ import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
 import { SignInComponent } from './user/sign-in/sign-in.component';
+import { CovidInfoComponent } from './covid-info/covid-info.component';
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignInComponent
+    SignInComponent,
+    CovidInfoComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],
