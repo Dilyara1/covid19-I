@@ -16,53 +16,27 @@ export class CovidInfoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCovidCases(country?: string, ab?: string, continent?: string): Observable<any> {
+  getCovidCases(country: string): Observable<any> {
     let params = new HttpParams();
     if (country) {
       params = params.append('country', country);
     }
-    if (ab) {
-      params = params.delete('country');
-      params = params.append('ab', ab);
-    }
-    if (continent) {
-      params = params.delete('country');
-      params = params.append('continent', continent);
-    }
-    console.log(params)
     return this.httpClient.get(API_CASES, {params});
   }
 
-  getCovidHistory(status: CovidStatus, country?: string, ab?: string, continent?: string): Observable<any> {
+  getCovidHistory(status: CovidStatus, country: string): Observable<any> {
     let params = new HttpParams().append('status', status);
     if (country) {
       params = params.append('country', country);
     }
-    if (ab) {
-      params = params.delete('country');
-      params = params.append('ab', ab);
-    }
-    if (continent) {
-      params = params.delete('country');
-      params = params.append('continent', continent);
-    }
     return this.httpClient.get(API_HISTORY, {params});
   }
 
-  getCovidVaccines(country?: string, ab?: string, continent?: string): Observable<any> {
+  getCovidVaccines(country: string): Observable<any> {
     let params = new HttpParams();
     if (country) {
       params = params.append('country', country);
     }
-    if (ab) {
-      params = params.delete('country');
-      params = params.append('ab', ab);
-    }
-    if (continent) {
-      params = params.delete('country');
-      params = params.append('continent', continent);
-    }
-    console.log(params)
     return this.httpClient.get(API_VACCINES, {params});
   }
 }

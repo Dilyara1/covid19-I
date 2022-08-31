@@ -69,14 +69,14 @@ export class CovidInfoComponent implements OnInit {
     return { data: arr, label: key?.toUpperCase() };
   }
 
-  fetchCovidCases(country?: string, ab?: string, continent?: string): Observable<any> {
-    return this.covidInfoService.getCovidCases(country, ab, continent).pipe(map((cases) => {
+  fetchCovidCases(country: string): Observable<any> {
+    return this.covidInfoService.getCovidCases(country).pipe(map((cases) => {
       return cases;
     }));
   }
 
-  fetchCovidHistory(status: CovidStatus, country?: string, ab?: string, continent?: string): Observable<any> {
-    return this.covidInfoService.getCovidHistory(status, country, ab, continent).pipe(map((history) => {
+  fetchCovidHistory(status: CovidStatus, country: string): Observable<any> {
+    return this.covidInfoService.getCovidHistory(status, country).pipe(map((history) => {
       console.log(history.All)
       if (history.All) {
         const dates = history.All.dates;
@@ -86,8 +86,8 @@ export class CovidInfoComponent implements OnInit {
     }));
   }
 
-  fetchCovidVaccines(country?: string, ab?: string, continent?: string): Observable<any> {
-    return this.covidInfoService.getCovidVaccines(country, ab, continent).pipe(map((vaccine) => {
+  fetchCovidVaccines(country: string): Observable<any> {
+    return this.covidInfoService.getCovidVaccines(country).pipe(map((vaccine) => {
       vaccine = vaccine?.All;
       this.vaccinePercent = (vaccine?.people_vaccinated / vaccine.population) * 100;
       this.vaccinePercent = this.vaccinePercent.toFixed(2) + '%';
