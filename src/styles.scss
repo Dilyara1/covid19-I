@@ -19,8 +19,8 @@ html, body {
 
 .page-content {
   display: block;
-  padding-right: 250px;
-  padding-left: 250px;
+  padding-right: 15vw;
+  padding-left: 15vw;
 }
 
 .flex-center {
@@ -75,3 +75,6 @@ html, body {
 .content {
   flex: 1 0 auto;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

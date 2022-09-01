@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from "./sign-in/sign-in.component";
 import { CovidInfoComponent } from "./covid-info/covid-info.component";
+import { AuthGuardService } from "./services/guard/auth.guard.service";
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path: 'covid-info',
-    component: CovidInfoComponent
+    component: CovidInfoComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

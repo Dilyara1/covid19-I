@@ -11,9 +11,18 @@ import { CovidInfoComponent } from './covid-info/covid-info.component';
 import { HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from './header/header.component';
 import { DropdownComponent } from './shared/dropdown/dropdown.component';
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LineChartComponent } from './shared/line-chart/line-chart.component';
 import { ChartsModule } from "ng2-charts";
+import { AuthGuardService } from "./services/guard/auth.guard.service";
+import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { AuthService } from "./services/auth.service";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSelectModule} from "@angular/material/select";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatInputModule } from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -28,12 +37,22 @@ import { ChartsModule } from "ng2-charts";
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
     FormsModule,
+    ReactiveFormsModule,
     ChartsModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatInputModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    AuthGuardService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

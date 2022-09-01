@@ -12,9 +12,7 @@ export class HeaderComponent implements OnInit {
   constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
-    console.log(this.authService.userData)
-    if (this.authService.userData) {
-      this.user = this.authService.userData;
-    }
+    const user = JSON.parse(localStorage.getItem('user')!);
+    this.user = user;
   }
 }

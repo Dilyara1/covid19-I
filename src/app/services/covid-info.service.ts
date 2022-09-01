@@ -16,7 +16,7 @@ export class CovidInfoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getCovidCases(country: string): Observable<any> {
+  getCovidCases(country?: string): Observable<any> {
     let params = new HttpParams();
     if (country) {
       params = params.append('country', country);

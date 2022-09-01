@@ -17,40 +17,50 @@ export class CovidInfoComponent implements OnInit {
   chartData: any;
   chartDataConfirmed: any;
   vaccinePercent: any;
+  countries: any[] = [];
+  country: any;
 
   constructor(private covidInfoService: CovidInfoService) { }
 
   ngOnInit(): void {
-    this.fetchCovidCases('France').subscribe((covidCases) => {
-      for (let [key, value] of Object.entries(covidCases)) {
-        if (key !== 'All') {
-          this.regionLabels.push(key);
-          this.covidCases.push(value);
+    this.getCountries();
+
+  }
+
+  getCountry(country: any) {
+    this.country = country;
+    if (this.country) {
+      this.fetchCovidCases(this.country).subscribe((covidCases) => {
+        for (let [key, value] of Object.entries(covidCases)) {
+          if (key !== 'All') {
+            this.regionLabels.push(key);
+            this.covidCases.push(value);
+          }
         }
-      }
-      this.chartData = {
-        data: this.getChartDataList(),
-        regionLabels: this.regionLabels,
-        colors: [{
-          borderColor: 'black',
-          backgroundColor: 'rgba(255,0,0,0.28)',
-        },
-          {
-            borderColor: 'green',
-            backgroundColor: 'rgba(0,255,0,0.28)',
-          },]
-      }
-      this.chartDataConfirmed = {
-        data: [this.getChartData(CovidStatus.CONFIRMED)],
-        regionLabels: this.regionLabels,
-        colors: [{
-          borderColor: 'black',
-          backgroundColor: 'rgba(255,255,0,0.28)',
-        }]
-      }
-    });
-    this.fetchCovidHistory(CovidStatus.CONFIRMED, 'France').subscribe();
-    this.fetchCovidVaccines('France').subscribe();
+        this.chartData = {
+          data: this.getChartDataList(),
+          regionLabels: this.regionLabels,
+          colors: [{
+            borderColor: 'black',
+            backgroundColor: 'rgba(255,0,0,0.28)',
+          },
+            {
+              borderColor: 'green',
+              backgroundColor: 'rgba(0,255,0,0.28)',
+            },]
+        }
+        this.chartDataConfirmed = {
+          data: [this.getChartData(CovidStatus.CONFIRMED)],
+          regionLabels: this.regionLabels,
+          colors: [{
+            borderColor: 'black',
+            backgroundColor: 'rgba(255,255,0,0.28)',
+          }]
+        }
+      });
+      this.fetchCovidHistory(CovidStatus.CONFIRMED, this.country).subscribe();
+      this.fetchCovidVaccines(this.country).subscribe();
+    }
   }
 
   getChartDataList() {
@@ -69,7 +79,7 @@ export class CovidInfoComponent implements OnInit {
     return { data: arr, label: key?.toUpperCase() };
   }
 
-  fetchCovidCases(country: string): Observable<any> {
+  fetchCovidCases(country?: string): Observable<any> {
     return this.covidInfoService.getCovidCases(country).pipe(map((cases) => {
       return cases;
     }));
@@ -92,5 +102,14 @@ export class CovidInfoComponent implements OnInit {
       this.vaccinePercent = (vaccine?.people_vaccinated / vaccine.population) * 100;
       this.vaccinePercent = this.vaccinePercent.toFixed(2) + '%';
     }));
+  }
+
+  getCountries() {
+    this.fetchCovidCases().subscribe((cases) => {
+      this.countries = Object.keys(cases)
+        .map((key) => {
+          return key;
+        });
+    })
   }
 }

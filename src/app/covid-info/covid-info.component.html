@@ -2,11 +2,14 @@
   <div class="page-content">
     <div class="content-box">
       <h4>COVID19 Information</h4>
-      <p>Country: </p>
-      <p *ngIf="latestCovidData">On {{latestCovidData?.latestDate | date}}  <span style="color:red"> {{latestCovidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
-      <p>Vaccinated level of total population: {{vaccinePercent}}</p>
-      <app-line-chart [chartData]="chartDataConfirmed"></app-line-chart>
-      <app-line-chart [chartData]="chartData"></app-line-chart>
+      <app-dropdown [items]="countries" [modelValue]="country" (modelValueChange)="getCountry($event)"></app-dropdown>
+      <ng-container *ngIf="country">
+        <p>Country: {{country}}</p>
+        <p *ngIf="latestCovidData">On {{latestCovidData?.latestDate | date}}  <span style="color:red"> {{latestCovidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
+        <p>Vaccinated level of total population: {{vaccinePercent}}</p>
+        <app-line-chart [chartData]="chartDataConfirmed"></app-line-chart>
+        <app-line-chart [chartData]="chartData"></app-line-chart>
+      </ng-container>
     </div>
   </div>
 </div>

@@ -1,4 +1,7 @@
 <div class="header">
   <h2 class="title">COVID19-I</h2>
-  <h4 class="username" *ngIf="authService.userData as user">{{user.displayName}}</h4>
+  <div class="flex-center" *ngIf="authService.isLoggedIn()">
+    <h4 class="username" style="margin-right: .5rem" *ngIf="user">{{user.email}}</h4>
+    <button class="btn" (click)="authService.onSignOut()">Sign Out</button>
+  </div>
 </div>
