@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+  background: #57dac0;
+  color: white;
+  flex-wrap: wrap;
+
+  & .title {
+    font-size: 1.5rem;
+    color: #dd2300;
+    margin-bottom: 0;
+    margin-left: .5rem;
+  }
+
+  & .user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-right: .5rem;
+    flex-wrap: wrap;
+  }
+
+  & .username {
+    font-size: 1rem;
+    margin-bottom: 0;
+    margin-right: .5rem;
+    color: $white !important;
+  }
+
+  /* Use a media query to add a break point at 800px: */
+  @media screen and (max-width: 800px) {
+    .user-info {
+      justify-content: end;
+    }
+  }
+}

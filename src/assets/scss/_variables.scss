@@ -1,0 +1,33 @@
+$white: #FFFFFF !default;
+$black: #000000 !default;
+
+$bg-primary-color: $white;
+$bg-primary-dark-color: #111114;
+
+$bg-secondary-color: $white;
+$bg-secondary-dark-color: #1C1D21;
+
+$color-primary: $bg-primary-dark-color;
+$color-primary-dark: $white;
+
+$color-secondary: rgba(17, 17, 20, 0.64);
+$color-secondary-dark: rgba(255, 255, 255, 0.4);
+
+$gray-6-color: rgba(17, 17, 20, 0.04);
+$gray-6-dark-color: rgba(255, 255, 255, 0.06);
+
+
+$colors: (
+  --bg: ($bg-primary-color, $bg-primary-dark-color),
+  --bg-secondary: ($bg-secondary-color, $bg-secondary-dark-color),
+  --color-primary: ($color-primary, $color-primary-dark),
+  --color-primary-button: ($color-primary-dark, $color-primary-dark),
+  --color-secondary: ($color-secondary, $color-secondary-dark),
+  --color-gray-6: ($gray-6-color, $gray-6-dark-color),
+);
+
+$bg: var(--bg);
+$bg-secondary: var(--bg-secondary);
+$primary: var(--color-primary);
+$secondary: var(--color-secondary);
+$gray-6: var(--color-gray-6);

@@ -1,0 +1,16 @@
+.spinner {
+  width: 35px;
+  height: 35px;
+  margin: 0 auto;
+  background-image: url("~/assets/images/coronavirus.svg");
+  animation: .85s linear 0s infinite normal none running spin;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

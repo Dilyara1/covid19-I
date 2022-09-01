@@ -1,80 +1,83 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/scss/variables";
+@import "assets/scss/grid";
+@import "assets/scss/header";
+@import "assets/scss/footer";
 @import "assets/scss/buttons";
-@import "assets/scss/dropdown";
+@import "assets/scss/spinner";
+@import "assets/scss/texts";
+
 html, body {
   height: 100%;
   width: 100%;
-  padding: 0;
-  margin: 0;
   box-sizing: border-box;
 }
 
-.page-container {
-  width: 100%;
-  padding-top: 24px;
-  padding-bottom: 106px;
-  position: relative;
-  display: block;
-}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: $bg;
+  transition: color 1s, background 1s;
 
-.page-content {
-  display: block;
-  padding-right: 15vw;
-  padding-left: 15vw;
-}
-
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-column {
-  flex-direction: column;
-}
-
-.content-box {
-  display: block;
-  padding: 20px;
-  box-shadow: 0 0.5rem 3rem rgb(0 0 0 / 10%);
-  border-radius: 1rem;
-  background: #fff;
-  text-align: center;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-  height: 70px;
-  background: #1abc9c;
-  color: white;
-
-  & .title {
-    font-size: 1.5rem;
-    color: red;
-  }
-
-  & .username {
-    font-size: 1rem;
+  @each $name, $color in $colors {
+    #{$name}: nth($color, 1);
   }
 }
 
-.footer {
-  height: 20px;
-  text-align: center;
+h4 {
+  color: $primary;
 }
 
-.content {
-  flex: 1 0 auto;
+p {
+  color: $secondary;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.theme-dark {
+  @each $name, $color in $colors {
+    #{$name}: nth($color, 2);
+  }
+
+  img {
+    filter: brightness(.8) contrast(1.2);
+  }
+}
+
+.images {
+  animation-delay: 5s;
+
+  .img-block:nth-child(2n) {
+    animation-delay: 2s;
+  }
+}
+
+.img-block {
+  width: 100px;
+  height: 100px;
+  display: block;
+  animation: covidAnimation 10s infinite;
+  animation-timing-function: ease-in-out;
+
+  img {
+    width: 100%;
+  }
+}
+
+/* The animation code */
+@keyframes covidAnimation {
+  0% {
+    transform: translate3d(0px, 0px, 0px)
+  }
+  25% {
+    transform: translate3d(30vw, 20vh, 100px) rotate(90deg)
+  }
+  50% {
+    transform: translate3d(70vw, 0vh, 100px) rotate(-90deg)
+  }
+  75% {
+    transform: translate3d(30vw, 20vh, 100px) rotate(90deg)
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0px)
+  }
+}

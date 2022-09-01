@@ -1,8 +1,15 @@
+@import "src/assets/scss/variables";
+
 .example-form {
   min-width: 150px;
   max-width: 500px;
   width: 100%;
-  margin:  0 auto;
+  margin: 0 auto;
+  color: $secondary;
+}
+
+mat-option[aria-selected="true"]:not(:hover) {
+  background: $bg-secondary !important;
 }
 
 .example-full-width {

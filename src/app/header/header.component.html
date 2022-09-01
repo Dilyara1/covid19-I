@@ -1,7 +1,8 @@
 <div class="header">
-  <h2 class="title">COVID19-I</h2>
-  <div class="flex-center" *ngIf="authService.isLoggedIn()">
-    <h4 class="username" style="margin-right: .5rem" *ngIf="user">{{user.email}}</h4>
-    <button class="btn" (click)="authService.onSignOut()">Sign Out</button>
+  <h2 class="title">COVID-19-I</h2>
+  <div class="user-info" *ngIf="authService.isLoggedIn()">
+    <h4 class="username" *ngIf="user">{{user.email}}</h4>
+    <button class="btn" style="margin-right: .5rem" (click)="authService.onSignOut()">Sign Out</button>
+    <button class="btn" (click)="toggleTheme()">Change theme</button>
   </div>
 </div>

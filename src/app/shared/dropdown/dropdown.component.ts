@@ -31,8 +31,15 @@ export class DropdownComponent implements OnInit, OnChanges {
     }
   }
 
-  selectValue(option: any) {
-    this.modelValueChange.emit(option);
+  selectValue(event: any) {
+    this.modelValueChange.emit(event.option.value);
+  }
+
+  checkValue(inputValue: any) {
+    if (!inputValue) {
+      this.modelValue = '';
+      this.modelValueChange.emit('');
+    }
   }
 
   private _filter(value: string): string[] {

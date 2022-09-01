@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.page-container {
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 106px;
+  position: relative;
+  display: block;
+}
+
+.page-content {
+  display: block;
+  padding-right: 15vw;
+  padding-left: 15vw;
+}
+
+.content-box {
+  display: block;
+  padding: 20px;
+  box-shadow: 0 0.5rem 3rem rgb(0 0 0 / 10%);
+  border-radius: 1rem;
+  background: $gray-6;
+  text-align: center;
+}

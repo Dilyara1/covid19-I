@@ -14,6 +14,7 @@ export class LineChartComponent implements OnInit, OnChanges {
 
   lineChartOptions = {
     responsive: true,
+    maintainAspectRatio: false
   };
   lineChartColors: Color[] = [];
   lineChartLegend = true;
@@ -38,8 +39,7 @@ export class LineChartComponent implements OnInit, OnChanges {
     if (chartData) {
       this.chartData = chartData;
       this.lineChartData = this.chartData.data;
-      console.log(this.lineChartData);
-      this.lineChartLabels = this.chartData.regionLabels;
+      this.lineChartLabels = this.chartData.labels;
       this.lineChartColors = this.chartData.colors;
     }
   }

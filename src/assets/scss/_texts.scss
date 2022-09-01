@@ -1,0 +1,22 @@
+.t {
+  &-color {
+    &-primary {
+      color: $primary !important;
+    }
+
+    &-secondary {
+      color: $secondary !important;
+    }
+  }
+
+  &-bg {
+    &-primary {
+      background-color: $bg !important;
+    }
+
+    &-secondary {
+      background-color: $bg-secondary !important;
+    }
+
+  }
+}

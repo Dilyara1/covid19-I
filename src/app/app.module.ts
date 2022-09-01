@@ -18,11 +18,11 @@ import { AuthGuardService } from "./services/guard/auth.guard.service";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { AuthService } from "./services/auth.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule} from "@angular/material/select";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatInputModule } from "@angular/material/input";
+import { PieChartComponent } from './shared/pie-chart/pie-chart.component';
+import { ThemeService } from "./services/theme.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { MatInputModule } from "@angular/material/input";
     CovidInfoComponent,
     HeaderComponent,
     DropdownComponent,
-    LineChartComponent
+    LineChartComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +44,6 @@ import { MatInputModule } from "@angular/material/input";
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    MatSelectModule,
     MatAutocompleteModule,
     MatInputModule,
     HttpClientModule,
@@ -51,7 +51,8 @@ import { MatInputModule } from "@angular/material/input";
     BrowserAnimationsModule
   ],
   providers: [
-    AuthGuardService
+    AuthGuardService,
+    ThemeService
   ],
   bootstrap: [AppComponent]
 })
