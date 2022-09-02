@@ -10,4 +10,8 @@
   outline: none;
   background: $bg;
   color: $primary;
+
+  &.sign-in {
+    margin-right: .5rem;
+  }
 }

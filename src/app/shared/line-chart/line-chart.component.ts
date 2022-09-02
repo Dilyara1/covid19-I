@@ -13,8 +13,7 @@ export class LineChartComponent implements OnInit, OnChanges {
   lineChartLabels: Label[] = [];
 
   lineChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false
+    responsive: true
   };
   lineChartColors: Color[] = [];
   lineChartLegend = true;

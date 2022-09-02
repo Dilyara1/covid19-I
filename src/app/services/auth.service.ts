@@ -3,13 +3,15 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { GithubAuthProvider } from '@angular/fire/auth';
 import { Router } from "@angular/router";
-import { User } from "../models/user";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   userData: any; // Save logged in user data
+  userSubject = new Subject();
+  userChange = this.userSubject.asObservable();
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service,
@@ -21,6 +23,7 @@ export class AuthService {
       if (user) {
         console.log('now user: ', user);
         this.userData = user;
+        this.setUser(user);
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
       } else {
@@ -28,6 +31,10 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       }
     });
+  }
+
+  setUser(user: any) {
+    this.userSubject.next(user);
   }
 
   // Returns true when user is logged in and email is verified
@@ -69,7 +76,7 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    const userData: User = {
+    const userData = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,

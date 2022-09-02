@@ -1,5 +1,5 @@
 export enum CovidStatus {
   CONFIRMED = 'confirmed',
-  DEATH = 'deaths',
+  DEATHS = 'deaths',
   RECOVERED = 'recovered'
 }

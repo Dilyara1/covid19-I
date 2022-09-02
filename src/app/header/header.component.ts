@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../services/auth.service";
-import { User } from "../models/user";
 import { ThemeService } from "../services/theme.service";
 
 @Component({
@@ -9,13 +8,16 @@ import { ThemeService } from "../services/theme.service";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  user: User;
+  user: any;
+
   constructor(public authService: AuthService,
-              public themeService: ThemeService) { }
+              public themeService: ThemeService) {
+  }
 
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    this.user = user;
+    this.authService.userChange.subscribe((user: any) => {
+      this.user = user;
+    });
   }
 
   toggleTheme() {

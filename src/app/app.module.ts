@@ -36,6 +36,7 @@ import { ThemeService } from "./services/theme.service";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
@@ -48,7 +49,6 @@ import { ThemeService } from "./services/theme.service";
     MatInputModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
   ],
   providers: [
     AuthGuardService,

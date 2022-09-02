@@ -1,0 +1,38 @@
+.images {
+  animation-delay: 5s;
+
+  .img-block:nth-child(2n) {
+    animation-delay: 2s;
+  }
+}
+
+.img-block {
+  display: block;
+  width: 80px;
+  height: 80px;
+  animation: covidAnimation 10s infinite;
+  animation-timing-function: ease-in-out;
+
+  img {
+    width: 100%;
+  }
+}
+
+/* The animation code */
+@keyframes covidAnimation {
+  0% {
+    transform: translate3d(0px, 0px, 0px)
+  }
+  25% {
+    transform: translate3d(30vw, 8vh, 100px) rotate(90deg)
+  }
+  50% {
+    transform: translate3d(70vw, 0vh, 100px) rotate(-90deg)
+  }
+  75% {
+    transform: translate3d(30vw, 8vh, 100px) rotate(90deg)
+  }
+  100% {
+    transform: translate3d(0px, 0px, 0px)
+  }
+}

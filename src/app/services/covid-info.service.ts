@@ -25,18 +25,14 @@ export class CovidInfoService {
   }
 
   getCovidHistory(status: CovidStatus, country: string): Observable<any> {
-    let params = new HttpParams().append('status', status);
-    if (country) {
-      params = params.append('country', country);
-    }
+    let params = new HttpParams()
+      .append('status', status)
+      .append('country', country);
     return this.httpClient.get(API_HISTORY, {params});
   }
 
   getCovidVaccines(country: string): Observable<any> {
-    let params = new HttpParams();
-    if (country) {
-      params = params.append('country', country);
-    }
+    let params = new HttpParams().append('country', country);
     return this.httpClient.get(API_VACCINES, {params});
   }
 }

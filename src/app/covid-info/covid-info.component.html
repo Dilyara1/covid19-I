@@ -2,34 +2,33 @@
   <div class="page-content">
     <div class="content-box">
       <h4>COVID-19 Information</h4>
-      <app-dropdown [items]="countries" [modelValue]="country" (modelValueChange)="getCountry($event)"></app-dropdown>
+      <app-dropdown [items]="countries" (modelValueChange)="getCountry($event)"></app-dropdown>
       <ng-container *ngIf="country">
         <p>Country: {{country}}</p>
         <ng-container *ngIf="!isLoading; else loading">
-          <p *ngIf="latestCovidData">On {{latestCovidData?.latestDate | date}}  <span style="color:red"> {{latestCovidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
-          <p>Vaccinated level of total population: {{vaccinePercent}}</p>
-          <div class="parent">
-            <div class="charts">
-              <ng-container *ngIf="!isPieChart; else pieChart">
-                <app-line-chart [chartData]="chartDataConfirmed"></app-line-chart>
-                <app-line-chart [chartData]="chartData"></app-line-chart>
-              </ng-container>
+          <p *ngIf="latestCovidData">On {{latestCovidData?.latestDate | date}}  <span
+            style="color:red"> {{latestCovidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
+          <p *ngIf="vaccinePercent">Vaccinated level of total population: {{vaccinePercent}}</p>
+          <div class="covid-info">
+            <p>Confirmed: {{covidInfo?.confirmed | number}}</p>
+            <p>Deaths: {{covidInfo?.deaths | number}}</p>
+            <p>Recovered: {{covidInfo?.recovered | number}}</p>
+          </div>
+          <div class="charts">
+            <ng-container *ngIf="!isPieChart; else pieChart">
+              <app-line-chart [chartData]="chartDataConfirmed"></app-line-chart>
+              <app-line-chart [chartData]="chartData"></app-line-chart>
+            </ng-container>
 
-              <ng-template #pieChart>
-                <app-pie-chart [chartData]="pieChartDataConfirmed" *ngIf="pieChartDataConfirmed"></app-pie-chart>
-                <app-pie-chart [chartData]="pieChartData" *ngIf="pieChartData"></app-pie-chart>
-              </ng-template>
-            </div>
-            <div class="covid-info">
-              <p>Confirmed: {{covidInfo?.confirmed}}</p>
-              <p>Deaths: {{covidInfo?.deaths}}</p>
-              <p>Recovered: {{covidInfo?.recovered}}</p>
-            </div>
+            <ng-template #pieChart>
+              <app-pie-chart [chartData]="pieChartDataConfirmed" *ngIf="pieChartDataConfirmed"></app-pie-chart>
+              <app-pie-chart [chartData]="pieChartData" *ngIf="pieChartData"></app-pie-chart>
+            </ng-template>
           </div>
         </ng-container>
-       <ng-template #loading>
-         <div class="spinner"></div>
-       </ng-template>
+        <ng-template #loading>
+          <div class="spinner"></div>
+        </ng-template>
       </ng-container>
     </div>
   </div>

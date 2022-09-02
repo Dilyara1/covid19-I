@@ -1,7 +1,8 @@
 <form class="example-form">
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label class="t-color-primary">Select Country</mat-label>
-    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" (ngModelChange)="checkValue($event)">
+    <mat-label class="t-color-primary">Select country</mat-label>
+    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
+           (ngModelChange)="checkValue($event)">
     <mat-autocomplete class="t-bg-secondary" #auto="matAutocomplete" (optionSelected)="selectValue($event)">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         <span class="t-color-secondary">{{option}}</span>

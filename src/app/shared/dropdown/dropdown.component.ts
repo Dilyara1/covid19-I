@@ -10,7 +10,6 @@ import { FormControl } from "@angular/forms";
 })
 export class DropdownComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];
-  @Input() modelValue: any;
   @Output() modelValueChange = new EventEmitter<any>();
   myControl = new FormControl('');
   options: any[] = [];
@@ -37,7 +36,6 @@ export class DropdownComponent implements OnInit, OnChanges {
 
   checkValue(inputValue: any) {
     if (!inputValue) {
-      this.modelValue = '';
       this.modelValueChange.emit('');
     }
   }

@@ -11,7 +11,6 @@ import { CovidStatus } from "../models/enums/enums";
 })
 export class CovidInfoComponent implements OnInit {
   covidCases: any[] = [];
-  selectedCase: any;
   latestCovidData: any;
   regionLabels: any[] = [];
   chartData: any;
@@ -25,19 +24,31 @@ export class CovidInfoComponent implements OnInit {
   isLoading = false;
   covidInfo: any;
 
-  constructor(private covidInfoService: CovidInfoService) { }
+  constructor(private covidInfoService: CovidInfoService) {
+  }
 
   ngOnInit(): void {
     this.getCountries();
+  }
 
+  getCountries() {
+    this.fetchCovidCases().subscribe((cases) => {
+      if (Object.keys(cases)?.length > 0) {
+        this.countries = Object.keys(cases)
+          .map((key) => {
+            return key;
+          });
+      }
+    })
   }
 
   getCountry(country: any) {
     this.country = country;
     if (this.country) {
-      this.isPieChart = false;
       this.isLoading = true;
-      this.covidCases = [];
+      this.resetData();
+      this.fetchCovidHistory(CovidStatus.CONFIRMED, this.country).subscribe();
+      this.fetchCovidVaccines(this.country).subscribe();
       this.fetchCovidCases(this.country).pipe(finalize(() => {
         this.isLoading = false;
       })).subscribe((covidCases) => {
@@ -55,76 +66,9 @@ export class CovidInfoComponent implements OnInit {
           this.covidInfo = covidCases.All;
           this.covidCases = [covidCases.All];
         }
-        if (!this.isPieChart) {
-          this.chartData = {
-            data: this.getChartDataList(),
-            labels: this.regionLabels,
-            colors: [{
-              borderColor: 'black',
-              backgroundColor: 'rgba(255,0,0,0.28)',
-            },
-              {
-                borderColor: 'green',
-                backgroundColor: 'rgba(0,255,0,0.28)',
-              },]
-          }
-          this.chartDataConfirmed = {
-            data: [this.getChartData(CovidStatus.CONFIRMED)],
-            labels: this.regionLabels,
-            colors: [{
-              borderColor: 'black',
-              backgroundColor: 'rgba(255,255,0,0.28)',
-            }]
-          }
-        } else {
-          const pieChartAll = this.covidCases[0];
-          const deathPercent = (pieChartAll.deaths / pieChartAll.confirmed) * 100;
-          const recoveredPercent = (pieChartAll.recovered / pieChartAll.confirmed) * 100;
-          this.pieChartData = {
-            data: [this.getFixed(deathPercent), this.getFixed(recoveredPercent), this.getFixed(100 - (deathPercent + recoveredPercent))],
-            labels: [CovidStatus.DEATH.toUpperCase(), CovidStatus.RECOVERED.toUpperCase(), 'Condition is unknown']
-          }
-          const confirmedOverPopulation = this.getConfirmedOverPopulation(pieChartAll.confirmed, pieChartAll.population);
-          this.pieChartDataConfirmed = {
-            data: [this.getFixed(confirmedOverPopulation.confirmed), this.getFixed(confirmedOverPopulation.other)],
-            labels: [CovidStatus.CONFIRMED.toUpperCase(), 'HEALTHY']
-          }
-        }
+        this.generateChartsData();
       });
-      this.fetchCovidHistory(CovidStatus.CONFIRMED, this.country).subscribe();
-      this.fetchCovidVaccines(this.country).subscribe();
     }
-  }
-
-  getChartDataList() {
-    const keys = [CovidStatus.DEATH, CovidStatus.RECOVERED];
-    const data = [];
-    for (let key of keys) {
-      data.push(this.getChartData(key));
-    }
-    return data;
-  }
-
-  getChartData(key: CovidStatus) {
-    const arr = this.covidCases.map((covidCase) => {
-      return covidCase[key];
-    });
-    return { data: arr, label: key?.toUpperCase() };
-  }
-
-  getConfirmedOverPopulation(confirmed: number, population: number): any {
-    if (confirmed && population) {
-      const confirmedPercent = (confirmed / population) * 100
-      return {confirmed: confirmedPercent, other: 100 - confirmedPercent};
-    }
-  }
-
-  getFixed(num: number): number {
-    return +num.toFixed(2);
-  }
-
-  fetchCovidCases(country?: string): Observable<any> {
-    return this.covidInfoService.getCovidCases(country);
   }
 
   fetchCovidHistory(status: CovidStatus, country: string): Observable<any> {
@@ -151,12 +95,93 @@ export class CovidInfoComponent implements OnInit {
     }));
   }
 
-  getCountries() {
-    this.fetchCovidCases().subscribe((cases) => {
-      this.countries = Object.keys(cases)
-        .map((key) => {
-          return key;
-        });
-    })
+  fetchCovidCases(country?: string): Observable<any> {
+    return this.covidInfoService.getCovidCases(country);
+  }
+
+  generateChartsData() {
+    if (!this.isPieChart) {
+      this.chartData = {
+        data: this.getChartDataList(),
+        labels: this.regionLabels,
+        colors: [{
+          borderColor: 'black',
+          backgroundColor: 'rgba(255,0,0,0.28)',
+        },
+          {
+            borderColor: 'green',
+            backgroundColor: 'rgba(0,255,0,0.28)',
+          },]
+      }
+      this.chartDataConfirmed = {
+        data: [this.getChartData(CovidStatus.CONFIRMED)],
+        labels: this.regionLabels,
+        colors: [{
+          borderColor: 'black',
+          backgroundColor: 'rgba(255,255,0,0.28)',
+        }]
+      }
+    } else {
+      const pieChartAll = this.covidCases[0];
+      const percentOverConfirmed = this.getPercentOverConfirmed(pieChartAll);
+      this.pieChartData = {
+        data: [percentOverConfirmed.deaths, percentOverConfirmed.recovered, percentOverConfirmed.other],
+        labels: [CovidStatus.DEATHS.toUpperCase(), CovidStatus.RECOVERED.toUpperCase(), 'Health condition unknown']
+      }
+      const percentOverPopulation = this.getPercentOverPopulation(pieChartAll.confirmed, pieChartAll.population);
+      this.pieChartDataConfirmed = {
+        data: [percentOverPopulation.confirmed, percentOverPopulation.other],
+        labels: [CovidStatus.CONFIRMED.toUpperCase(), 'HEALTHY']
+      }
+    }
+  }
+
+  getChartDataList() {
+    const keys = [CovidStatus.DEATHS, CovidStatus.RECOVERED];
+    const data = [];
+    for (let key of keys) {
+      data.push(this.getChartData(key));
+    }
+    return data;
+  }
+
+  getChartData(key: CovidStatus) {
+    const arr = this.covidCases.map((covidCase) => {
+      return covidCase[key];
+    });
+    return {data: arr, label: key?.toUpperCase()};
+  }
+
+  getPercentOverConfirmed(pieChartAll: any) {
+    const deathPercent = (pieChartAll.deaths / pieChartAll.confirmed) * 100;
+    const recoveredPercent = (pieChartAll.recovered / pieChartAll.confirmed) * 100;
+    return {
+      deaths: this.getFixed(deathPercent),
+      recovered: this.getFixed(recoveredPercent),
+      other: this.getFixed(100 - (deathPercent + recoveredPercent))
+    };
+  }
+
+  getPercentOverPopulation(confirmed: number, population: number): any {
+    if (confirmed && population) {
+      const confirmedPercent = (confirmed / population) * 100;
+      return {confirmed: this.getFixed(confirmedPercent), other: this.getFixed(100 - confirmedPercent)};
+    }
+  }
+
+  getFixed(num: number): number {
+    return +num.toFixed(2);
+  }
+
+  resetData() {
+    this.isPieChart = false;
+    this.covidCases = [];
+    this.regionLabels = [];
+    this.covidInfo = null;
+    this.latestCovidData = null;
+    this.pieChartData = null;
+    this.pieChartDataConfirmed = null;
+    this.chartData = null;
+    this.chartDataConfirmed = null;
   }
 }
