@@ -4,14 +4,14 @@
   align-items: center;
   flex-wrap: wrap;
   padding: 10px 10px;
-  background: #57dac0;
+  background: #53BF9D;
   color: white;
 
   & .title {
     margin-bottom: 0;
     margin-left: .5rem;
     font-size: 1.5rem;
-    color: #dd2300;
+    color: $brand;
   }
 
   & .user-info {
