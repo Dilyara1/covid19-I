@@ -4,6 +4,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { GithubAuthProvider } from '@angular/fire/auth';
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
+import { LoadingService } from "./loading.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) {
     /* Saving user data in localstorage when
         logged in and setting up null when logged out */
@@ -57,8 +59,12 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
+        this.loadingService.loadingOn();
         this.setUserData(result.user).then(() => {
+          this.loadingService.loadingOff();
           this.router.navigate(['covid-info']);
+        }, () => {
+          this.loadingService.loadingOff();
         });
       })
       .catch(error => {

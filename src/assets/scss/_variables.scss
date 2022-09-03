@@ -17,6 +17,8 @@ $color-secondary-dark: rgba(255, 255, 255, 0.4);
 $gray-6-color: rgba(17, 17, 20, 0.04);
 $gray-6-dark-color: rgba(255, 255, 255, 0.06);
 
+$loading-color: rgba(0, 0, 0, 0.39);
+$loading-dark-color: rgb(255 255 255 / 39%);
 
 $colors: (
   --bg: ($bg-primary-color, $bg-primary-dark-color),
@@ -25,6 +27,7 @@ $colors: (
   --color-primary-button: ($color-primary-dark, $color-primary-dark),
   --color-secondary: ($color-secondary, $color-secondary-dark),
   --color-gray-6: ($gray-6-color, $gray-6-dark-color),
+  --color-loading: ($loading-color, $loading-dark-color)
 );
 
 $bg: var(--bg);
@@ -32,3 +35,4 @@ $bg-secondary: var(--bg-secondary);
 $primary: var(--color-primary);
 $secondary: var(--color-secondary);
 $gray-6: var(--color-gray-6);
+$loading: var(--color-loading);

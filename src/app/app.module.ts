@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatInputModule } from "@angular/material/input";
 import { PieChartComponent } from './shared/pie-chart/pie-chart.component';
 import { ThemeService } from "./services/theme.service";
+import { LoadingComponent } from './shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ThemeService } from "./services/theme.service";
     HeaderComponent,
     DropdownComponent,
     LineChartComponent,
-    PieChartComponent
+    PieChartComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

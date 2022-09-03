@@ -4,6 +4,19 @@
   margin: 0 auto;
   background-image: url("~/assets/images/coronavirus.svg");
   animation: .85s linear 0s infinite normal none running spin;
+
+  &-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $loading;
+    z-index: 20000;
+  }
 }
 
 @keyframes spin {
