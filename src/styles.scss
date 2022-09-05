@@ -7,6 +7,12 @@
 @import "assets/scss/spinner";
 @import "assets/scss/texts";
 @import "assets/scss/images";
+@import "assets/scss/dropdown";
+@import "assets/scss/input";
+
+* {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 html, body {
   height: 100%;
@@ -17,7 +23,6 @@ html, body {
 body {
   margin: 0;
   padding: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
   background: $bg;
   transition: color 1s, background 1s;
 

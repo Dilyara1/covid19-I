@@ -1,0 +1,25 @@
+<form class="dropdown-container" #testForm="ngForm" appClickedOutside (clickOutside)="isDropDownOpen = false">
+  <div class="dropdown">
+    <div class="dropdown-search">
+      <input
+        name="dropdown"
+        class="dropdown-search-input"
+        type="text"
+        placeholder="Select country"
+        [(ngModel)]="inputValue"
+        [disabled]="disabled"
+        autocomplete="off"
+        (ngModelChange)="handleInputEvent($event)"
+        (click)="toggleDropdown()"/>
+    </div>
+  </div>
+
+  <div class="dropdown-list" *ngIf="isDropDownOpen">
+    <div
+      (click)="selectOption(item)"
+      *ngFor="let item of filteredOptions"
+      class="dropdown-list-item">
+      {{ item }}
+    </div>
+  </div>
+</form>

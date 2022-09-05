@@ -2,7 +2,7 @@
   <div class="page-content">
     <div class="content-box">
       <h4>COVID-19 Information</h4>
-      <app-dropdown [items]="countries" (modelValueChange)="getCountry($event)"></app-dropdown>
+      <app-custom-dropdown [items]="countries" (inputValueChange)="getCountry($event)" [disabled]="countries?.length === 0"></app-custom-dropdown>
       <ng-container *ngIf="country">
         <p>Country: {{country}}</p>
         <ng-container *ngIf="!isLoading; else loading">

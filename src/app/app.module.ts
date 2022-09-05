@@ -10,20 +10,19 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { CovidInfoComponent } from './covid-info/covid-info.component';
 import { HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from './header/header.component';
-import { DropdownComponent } from './shared/dropdown/dropdown.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { LineChartComponent } from './shared/line-chart/line-chart.component';
+import { LineChartComponent } from './shared/components/line-chart/line-chart.component';
 import { ChartsModule } from "ng2-charts";
 import { AuthGuardService } from "./services/guard/auth.guard.service";
 import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { MatInputModule } from "@angular/material/input";
-import { PieChartComponent } from './shared/pie-chart/pie-chart.component';
+import { PieChartComponent } from './shared/components/pie-chart/pie-chart.component';
 import { ThemeService } from "./services/theme.service";
-import { LoadingComponent } from './shared/loading/loading.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
+import { CustomDropdownComponent } from './shared/components/custom-dropdown/custom-dropdown.component';
+import { ClickedOutsideDirective } from './shared/directives/clicked-outside/clicked-outside.directive';
 
 @NgModule({
   declarations: [
@@ -31,10 +30,11 @@ import { LoadingComponent } from './shared/loading/loading.component';
     SignInComponent,
     CovidInfoComponent,
     HeaderComponent,
-    DropdownComponent,
     LineChartComponent,
     PieChartComponent,
-    LoadingComponent
+    LoadingComponent,
+    CustomDropdownComponent,
+    ClickedOutsideDirective
   ],
   imports: [
     BrowserModule,
@@ -47,8 +47,6 @@ import { LoadingComponent } from './shared/loading/loading.component';
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
-    MatAutocompleteModule,
-    MatInputModule,
     HttpClientModule,
     AppRoutingModule,
   ],
