@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CovidInfoService } from "../services/covid-info.service";
-import { Observable } from "rxjs";
+import { Observable, of, Subscription } from "rxjs";
 import { finalize, map } from "rxjs/operators";
 import { CovidStatus } from "../models/enums/enums";
 
@@ -9,14 +9,15 @@ import { CovidStatus } from "../models/enums/enums";
   templateUrl: './covid-info.component.html',
   styleUrls: ['./covid-info.component.scss']
 })
-export class CovidInfoComponent implements OnInit {
+export class CovidInfoComponent implements OnInit, OnDestroy {
   covidCases: any[] = [];
-  latestCovidData: any;
+  covidCasesSubscription: Subscription;
+  latestCovidData$: Observable<any>;
   regionLabels: any[] = [];
   chartData: any;
   chartDataConfirmed: any;
-  vaccinePercent: any;
-  countries: any[] = [];
+  vaccinePercent$: Observable<any>;
+  countries$: Observable<any[]>;
   country: any;
   pieChartData: any;
   pieChartDataConfirmed: any;
@@ -28,18 +29,20 @@ export class CovidInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCountries();
+    this.countries$ = this.getCountries();
   }
 
   getCountries() {
-    this.fetchCovidCases().subscribe((cases) => {
+    return this.fetchCovidCases().pipe(map((cases) => {
       if (Object.keys(cases)?.length > 0) {
-        this.countries = Object.keys(cases)
+        return  Object.keys(cases)
           .map((key) => {
             return key;
-          });
+        });
+      } else {
+        return [];
       }
-    })
+    }));
   }
 
   getCountry(country: any) {
@@ -47,9 +50,9 @@ export class CovidInfoComponent implements OnInit {
     if (this.country) {
       this.isLoading = true;
       this.resetData();
-      this.fetchCovidHistory(CovidStatus.CONFIRMED, this.country).subscribe();
-      this.fetchCovidVaccines(this.country).subscribe();
-      this.fetchCovidCases(this.country).pipe(finalize(() => {
+      this.latestCovidData$ = this.fetchCovidHistory(CovidStatus.CONFIRMED, this.country);
+      this.vaccinePercent$ = this.fetchCovidVaccines(this.country);
+      this.covidCasesSubscription = this.fetchCovidCases(this.country).pipe(finalize(() => {
         this.isLoading = false;
       })).subscribe((covidCases) => {
         if (Object.keys(covidCases).length > 1) {
@@ -76,7 +79,9 @@ export class CovidInfoComponent implements OnInit {
       if (history.All) {
         const dates = history.All.dates;
         const data = Object.entries(dates)[0];
-        this.latestCovidData = {latestDate: data[0], latestNumber: data[1]};
+        return {latestDate: data[0], latestNumber: data[1]};
+      } else {
+        return null;
       }
     }));
   }
@@ -85,12 +90,14 @@ export class CovidInfoComponent implements OnInit {
     return this.covidInfoService.getCovidVaccines(country).pipe(map((vaccine) => {
       if (vaccine.All) {
         const vaccineData = vaccine.All;
+        let vaccinePercent: string | number = '0%';
         if (vaccineData?.people_vaccinated) {
-          this.vaccinePercent = (vaccineData?.people_vaccinated / vaccineData.population) * 100;
-          this.vaccinePercent = this.vaccinePercent.toFixed(2) + '%';
-        } else {
-          this.vaccinePercent = '0%';
+          vaccinePercent = (vaccineData?.people_vaccinated / vaccineData.population) * 100;
+          vaccinePercent = vaccinePercent.toFixed(2) + '%';
         }
+        return vaccinePercent;
+      } else {
+        return null;
       }
     }));
   }
@@ -178,10 +185,16 @@ export class CovidInfoComponent implements OnInit {
     this.covidCases = [];
     this.regionLabels = [];
     this.covidInfo = null;
-    this.latestCovidData = null;
+    this.latestCovidData$ = of(null);
     this.pieChartData = null;
     this.pieChartDataConfirmed = null;
     this.chartData = null;
     this.chartDataConfirmed = null;
+  }
+
+  ngOnDestroy() {
+    if (this.covidCasesSubscription) {
+      this.covidCasesSubscription.unsubscribe();
+    }
   }
 }

@@ -2,13 +2,13 @@
   <div class="page-content">
     <div class="content-box">
       <h4>COVID-19 Information</h4>
-      <app-custom-dropdown [items]="countries" (inputValueChange)="getCountry($event)" [disabled]="countries?.length === 0"></app-custom-dropdown>
+      <app-custom-dropdown *ngIf="countries$ | async as countries" [items]="countries" (inputValueChange)="getCountry($event)" [disabled]="countries?.length === 0"></app-custom-dropdown>
       <ng-container *ngIf="country">
         <p>Country: {{country}}</p>
         <ng-container *ngIf="!isLoading; else loading">
-          <p *ngIf="latestCovidData">On {{latestCovidData?.latestDate | date}}  <span
-            style="color:red"> {{latestCovidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
-          <p *ngIf="vaccinePercent">Vaccinated level of total population: {{vaccinePercent}}</p>
+          <p *ngIf="latestCovidData$ | async as covidData">On {{covidData?.latestDate | date}}  <span
+            style="color:red"> {{covidData?.latestNumber | number}}</span> new confirmed cases detected.</p>
+          <p *ngIf="vaccinePercent$ | async as vaccinePercent">Vaccinated level of total population: {{vaccinePercent}}</p>
           <div class="covid-info">
             <p>Confirmed: {{covidInfo?.confirmed | number}}</p>
             <p>Deaths: {{covidInfo?.deaths | number}}</p>
