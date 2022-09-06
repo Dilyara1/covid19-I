@@ -26,9 +26,10 @@ export class ThemeService {
     });
   }
 
-  public toggleTheme(): void {
+  public toggleTheme(): any {
     this.isDarkTheme = !this.isDarkTheme;
     this.setTheme(this.isDarkTheme);
+    return this.isDarkTheme ? Theme.Dark : Theme.Light;
   }
 
   setTheme(state: boolean): void {

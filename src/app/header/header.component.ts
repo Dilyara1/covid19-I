@@ -9,18 +9,20 @@ import { ThemeService } from "../services/theme.service";
 })
 export class HeaderComponent implements OnInit {
   user: any;
+  theme: any;
 
   constructor(public authService: AuthService,
               public themeService: ThemeService) {
   }
 
   ngOnInit(): void {
+    this.theme = localStorage.getItem('theme');
     this.authService.userChange.subscribe((user: any) => {
       this.user = user;
     });
   }
 
   toggleTheme() {
-    this.themeService.toggleTheme();
+    this.theme = this.themeService.toggleTheme();
   }
 }
